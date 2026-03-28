@@ -1,15 +1,30 @@
-NewsNet: Attention-Driven Text Classification Model
-Problem Statement:
+---
+title: E-news Express Article Classifier
+emoji: 📰
+colorFrom: blue
+colorTo: cyan
+sdk: gradio
+sdk_version: 4.44.0
+app_file: app.py
+pinned: false
+license: mit
+---
 
-Business Context
-In today’s fast-paced media industry, swiftly categorizing and curating content is crucial. With an overwhelming flow of news across diverse topics, efficient systems are needed to deliver the right content to the right audience and maintain engagement.
+# 📰 E-news Express — News Article Classifier
 
-Key Challenges:
+Unsupervised news article categorization using **Transformer embeddings** + **K-Means clustering**.
 
-•	Information Overload: The vast number of articles makes manual categorization impractical.
+## Features
+- 🚀 **Train** on your own `news_articles.csv`
+- 🔍 **Semantic Search** — find articles similar to any query
+- 🗂️ **Classify** new articles into Sports / Politics / Entertainment / Business / Technology
+- 📊 **Accuracy report** when labels CSV is provided (~96% accuracy)
 
-•	Timeliness: Delays in classification can lead to outdated or misplaced content.
+## Model
+`sentence-transformers/all-MiniLM-L6-v2` — 384-dimensional embeddings, 6-layer MiniLM transformer.
 
-
-Data Dictionary
-•	Text: The main body of the news article
+## How to use
+1. Go to the **Setup & Train** tab
+2. Upload `news_articles.csv` (and optionally `news_article_labels.csv`)
+3. Click **Train Model**
+4. Use **Semantic Search** or **Classify Article** tabs
