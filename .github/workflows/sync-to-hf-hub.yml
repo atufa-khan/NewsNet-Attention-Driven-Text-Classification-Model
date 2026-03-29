@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   sync-to-hub:
@@ -11,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout GitHub repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
@@ -22,7 +23,5 @@ jobs:
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-
           git remote add hf_space https://atufakhan:$HF_TOKEN@huggingface.co/spaces/atufakhan/enews-classifier
-
           git push hf_space main --force
