@@ -1,24 +1,28 @@
-name: Sync GitHub to Hugging Face Hub
+name: Sync to Hugging Face hub
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+  workflow_dispatch:
 
 jobs:
-  sync:
+  sync-to-hub:
     runs-on: ubuntu-latest
-
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  
-
-      - name: Sync to Hugging Face
-        uses: huggingface/hub-sync@v0.1.0   
+        uses: actions/checkout@v4
         with:
-          github_repo_id: ${{ github.repository }}
-          huggingface_repo_id: atufakhan/enews-classifier
-          hf_token: ${{ secrets.HF_TOKEN }}
+          fetch-depth: 0
+
+      - name: Push to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "github-actions"
+
+          git remote add hf https://atufakhan:$HF_TOKEN@huggingface.co/atufakhan/enews-classifier
+
+          git push hf main --force
