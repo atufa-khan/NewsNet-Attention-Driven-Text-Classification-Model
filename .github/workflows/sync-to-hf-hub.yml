@@ -1,32 +1,28 @@
-name: Sync to Hugging Face hub
+name: Sync to Hugging Face Spaces
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          lfs: true
 
-      - name: Push to Hugging Face
+      - name: Push to Hugging Face Spaces
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "github-actions"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
 
-          git remote remove hf || true
+          git remote add hf_space https://atufakhan:$HF_TOKEN@huggingface.co/spaces/atufakhan/enews-classifier
 
-          git remote add hf https://atufakhan:$HF_TOKEN@huggingface.co/spaces/atufakhan/enews-classifier
-
-          git push hf main --force
+          git push hf_space main --force
