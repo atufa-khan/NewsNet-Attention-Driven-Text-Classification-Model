@@ -1,14 +1,23 @@
 name: Sync GitHub to Hugging Face Hub
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   
+
     steps:
-      - uses: actions/checkout@v6
-      - uses: huggingface/hub-sync@v0.1.0
+      - name: Checkout repository
+        uses: actions/checkout@v4  
+
+      - name: Sync to Hugging Face
+        uses: huggingface/hub-sync@v0.1.6   
         with:
           github_repo_id: ${{ github.repository }}
           huggingface_repo_id: atufakhan/repo-name
